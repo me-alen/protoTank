@@ -1,0 +1,162 @@
+function Mothership() {
+  this.currentPosition = {
+    x: Math.ceil(Math.random() * 20),
+    y: Math.ceil(Math.random() * 20)
+  };
+}
+function Rover(MS) {
+  this.MS = MS;
+  this.currentPosition = { x: 0, y: 0 };
+}
+
+Rover.prototype.move = function(keyvalue) {
+  switch (keyvalue) {
+    case "ArrowUp":
+      this.currentPosition.y += 1;
+      break;
+    case "ArrowDown":
+      this.currentPosition.y -= 1;
+      break;
+    case "ArrowLeft":
+      this.currentPosition.x -= 1;
+      break;
+    case "ArrowRight":
+      this.currentPosition.x += 1;
+      break;
+    default:
+      break;
+  }
+};
+
+Rover.prototype.checkandgivesuggestion = function() {
+  if (
+    this.currentPosition.x !== this.MS.currentPosition.x &&
+    this.currentPosition.y !== this.MS.currentPosition.y
+  ) {
+    //looking at x coordinate
+    console.log(this.MS.currentPosition.x, this.MS.currentPosition.y);
+
+    if (this.MS.currentPosition.x < this.currentPosition.x) {
+      console.log("Press ArrowLeft key");
+      console.log(this.currentPosition.x, this.currentPosition.y);
+    } else if (this.MS.currentPosition.x > this.currentPosition.x) {
+      console.log("Press ArrowRight key");
+      console.log(this.currentPosition.x, this.currentPosition.y);
+    }
+    //looking at y coordinate
+    if (this.MS.currentPosition.y < this.currentPosition.y) {
+      console.log("Press ArrowDown key");
+      console.log(this.currentPosition.x, this.currentPosition.y);
+    } else if (this.MS.currentPosition.y > this.currentPosition.y) {
+      console.log("Press ArrowUp key");
+      console.log(this.currentPosition.x, this.currentPosition.y);
+    }
+  } else {
+    console.log("You have reached your location");
+  }
+};
+
+const shipM = new Mothership();
+const ship = new Rover(shipM);
+
+ship.checkandgivesuggestion();
+
+document.addEventListener("keydown", e => {
+  ship.move(e.key);
+  ship.checkandgivesuggestion();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Tank() {
+  this.currentState = 0;
+  this.capacity = 100;
+}
+function Tap(tankState) {
+  this.tankState = tankState;
+}
+
+function UserInterfaceManagr() {
+  this.tank = new Tank();
+  this.tap = new Tap();
+}
+
+UserInterfaceManagr.prototype.setUpUserActions = function() {
+  console.log(`Press 'S' to start...`);
+  document.addEventListener("keydown", e => {
+    if (e.key === "s" || e.key === "S") {
+      this.tank.check();
+    } else if (e.key === "1") {
+      const rate = 1;
+      console.log("Starting Tap 1 with 1 cubic cm/sec...");
+      this.tap.flow(e.key, rate);
+    } else if (e.key === "2") {
+      console.log("Stoping Tap 1...");
+      this.tap.flow(e.key);
+    } else if (e.key === "3") {
+      const rate = 2;
+      console.log("Starting Tap 2 with 2 cubic cm/sec...");
+      this.tap.flow(e.key, rate);
+    } else if (e.key === "4") {
+      console.log("Stoping Tap 2...");
+      this.tap.flow(e.key);
+    } else {
+      return null;
+    }
+  });
+};
+
+Tap.prototype.flow = function(keyvalue, tapRate = 0) {
+  console.log(keyvalue, tapRate);
+
+  setInterval(() => {
+    this.currentState += tapRate;
+    console.log(currentState);
+  }, 1000);
+};
+
+Tank.prototype.check = function() {
+  if (this.capacity === this.currentState) {
+    console.log(`Tank Full`);
+  } else {
+    console.log(`Current State : ${this.currentState}
+Capacity : ${this.capacity}
+        `);
+  }
+};
+
+this.tank = new Tank();
+this.tap = new Tap(tank);
+
+document.addEventListener("keydown", e => {});
+new UserInterfaceManagr().setUpUserActions();
