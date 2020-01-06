@@ -1,19 +1,17 @@
 function Tank() {
   this.currentState = 0;
-  this.capacity = 100;
+  this.capacity = 10;
 }
 function Tap(tankState) {
   this.tankState = tankState;
 }
 
-const tank = new Tank();
-const tap = new Tap(tank);
+this.tank = new Tank();
+this.tap = new Tap(tank);
 
-console.log(`Press 'S' to start...`);
+console.log(`Open Tap...`);
 document.addEventListener("keydown", e => {
-  if (e.key === "s" || e.key === "S") {
-    this.tank.check();
-  } else if (e.key === "1") {
+  if (e.key === "1") {
     const rate = 1;
     console.log("Starting Tap 1 with 1 cubic cm/sec...");
     this.tap.flow(e.key, rate);
@@ -33,11 +31,17 @@ document.addEventListener("keydown", e => {
 });
 
 Tap.prototype.flow = function(keyvalue, tapRate = 0) {
-  console.log(keyvalue, tapRate);
-  setInterval(() => {
-    this.currentState += tapRate;
-    console.log(this.currentState);
-  }, 1000);
+  console.log(`KeyValue : ${keyvalue} , TapRate : ${tapRate}`);
+  if (keyvalue === "1" || keyvalue === "3") {
+    function calculate() {}
+    setInterval(() => {
+      this.tankState.currentState += tapRate;
+      console.log(this.tankState.currentState);
+      this.tankState.check();
+    }, 1000);
+  } else {
+    clearInterval(calculate);
+  }
 };
 
 Tank.prototype.check = function() {
@@ -49,8 +53,3 @@ Capacity : ${this.capacity}
         `);
   }
 };
-
-this.tank = new Tank();
-this.tap = new Tap(tank);
-
-document.addEventListener("keydown", e => {});
